@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Combine Base64 Videos</title>
+    <title>beedio</title>
     <style>
         body, html {
             margin: 0;
@@ -35,7 +35,7 @@
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Network response was not ok for ' + url);
+                        throw new Error('network response was not ok for ' + url);
                     }
                     return response.text();
                 })
@@ -48,7 +48,7 @@
             videoPlayer.src = "data:video/mp4;base64," + combinedBase64;
         })
         .catch(error => {
-            console.error('Error fetching or combining base64 strings:', error);
+            console.error('error fetching or combining base64 strings ):', error);
         });
     </script>
 </body>
