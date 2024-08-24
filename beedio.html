@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>beedio</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" controls autoplay></video>
+
+    <script>
+        const base64Url = 'https://raw.githubusercontent.com/username/repository/branch/path/to/your/file.txt';
+
+        fetch(base64Url)
+            .then(response => response.text())
+            .then(base64String => {
+                const videoPlayer = document.getElementById('videoPlayer');
+                videoPlayer.src = "data:video/mp4;base64," + base64String.trim();
+            })
+            .catch(error => {
+                console.error('Error fetching base64 string:', error);
+            });
+    </script>
+</body>
+</html>
