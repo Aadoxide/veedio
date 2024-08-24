@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>beedio</title>
+    <title>Combine Base64 Videos</title>
     <style>
         body, html {
             margin: 0;
@@ -26,17 +26,30 @@
     <video id="videoPlayer" controls autoplay></video>
 
     <script>
-        const base64Url = 'https://raw.githubusercontent.com/Aadoxide/veedio/main/base64.b64';
+        const base64Urls = [
+            'https://raw.githubusercontent.com/Aadoxide/veedio/main/base64.b64',
+            'https://raw.githubusercontent.com/Aadoxide/veedio/main/base642.b64'
+        ];
 
-        fetch(base64Url)
-            .then(response => response.text())
-            .then(base64String => {
-                const videoPlayer = document.getElementById('videoPlayer');
-                videoPlayer.src = "data:video/mp4;base64," + base64String.trim();
-            })
-            .catch(error => {
-                console.error('Error fetching base64 string:', error);
-            });
+        Promise.all(base64Urls.map(url =>
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok for ' + url);
+                    }
+                    return response.text();
+                })
+                .then(text => text.trim())
+        ))
+        .then(base64Strings => {
+            const combinedBase64 = base64Strings.join('');
+
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = "data:video/mp4;base64," + combinedBase64;
+        })
+        .catch(error => {
+            console.error('Error fetching or combining base64 strings:', error);
+        });
     </script>
 </body>
 </html>
